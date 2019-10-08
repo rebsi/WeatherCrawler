@@ -94,6 +94,8 @@ class HausruckWatherProvider(object):
 
         pressure = self._parseFloat(HausruckWatherProvider._getTextFromTr(tableRows, 8, 2))
         pressure3hTrend = self._parseFloat(HausruckWatherProvider._getTextFromTr(tableRows, 8, 3))
+        if tableRows[8].findChildren('td')[3].img.attrs['src']=='p_do.gif':
+            pressure3hTrend = -pressure3hTrend
 
         wellness = HausruckWatherProvider._getTextFromTr(tableRows, 9)
         forecastShort = HausruckWatherProvider._getTextFromTr(tableRows, 10)
