@@ -29,10 +29,56 @@ class HausruckWatherProvider(object):
         return datetime.datetime.now().replace(hour=timePart.hour, minute=timePart.minute, second=0, microsecond=0)
 
     def _parseDirection(self, str):
-        return re.search(".+ / (.+)", str)[1]
+        search = re.search(".+ / (.+)", str)
+        if search == None:
+            return None
+        return self._parseInt(str)
 
-    def _parseDirectionAndString(self, str):
+    def _parseStringDirectionAndValue(self, str):
         return re.search("(.+) (\d+.+)", str)
+
+    def _stringDirectionToInt(self, str):
+        if (str == 'N'):
+            return 0
+
+        if (str == 'N-NO'):
+            return 22.5
+        if (str == 'NO'):
+            return 45
+        if (str == 'O-NO'):
+            return 67.5
+
+        if (str == 'O'):
+            return 90
+
+        if (str == 'O-SO'):
+            return 112.5
+        if (str == 'SO'):
+            return 135
+        if (str == 'S-SO'):
+            return 157.5
+
+        if (str == 'S'):
+            return 180
+
+        if (str == 'S-SW'):
+            return 202.5
+        if (str == 'SW'):
+            return 225
+        if (str == 'W-SW'):
+            return 247.5
+
+        if (str == 'W'):
+            return 270
+
+        if (str == 'W-NW'):
+            return 292.5
+        if (str == 'NW'):
+            return 315
+        if (str == 'N-NW'):
+            return 337.5
+
+        return None
 
     def _monthTextToNr(self, str):
         if (str.startswith('J')):
@@ -121,18 +167,18 @@ class HausruckWatherProvider(object):
 
         windSpeed = self._parseFloat(HausruckWatherProvider._getTextFromTr(tableRows, 19, 2))
         windDirection = self._parseDirection(HausruckWatherProvider._getTextFromTr(tableRows, 20))
-        windDominatingDirection = HausruckWatherProvider._getTextFromTr(tableRows, 20, 3)
+        windDominatingDirection = self._stringDirectionToInt(HausruckWatherProvider._getTextFromTr(tableRows, 20, 3))
         windMaxTime = self._parseTime(HausruckWatherProvider._getTextFromTr(tableRows, 19, 3))
-        windMaxGrp = self._parseDirectionAndString(HausruckWatherProvider._getTextFromTr(tableRows, 19, 4))
+        windMaxGrp = self._parseStringDirectionAndValue(HausruckWatherProvider._getTextFromTr(tableRows, 19, 4))
         windMax = self._parseFloat(windMaxGrp[2])
-        windMaxDirection = windMaxGrp[1]
+        windMaxDirection = self._stringDirectionToInt(windMaxGrp[1])
 
         gust = self._parseFloat(HausruckWatherProvider._getTextFromTr(tableRows, 18, 2))
         gustDirection = self._parseDirection(HausruckWatherProvider._getTextFromTr(tableRows, 21))
         gustMaxTime = self._parseTime(HausruckWatherProvider._getTextFromTr(tableRows, 18, 3))
-        gustMaxGrp = self._parseDirectionAndString(HausruckWatherProvider._getTextFromTr(tableRows, 18, 4))
+        gustMaxGrp = self._parseStringDirectionAndValue(HausruckWatherProvider._getTextFromTr(tableRows, 18, 4))
         gustMax = self._parseFloat(gustMaxGrp[2])
-        gustMaxDirection = gustMaxGrp[1]
+        gustMaxDirection = self._stringDirectionToInt(gustMaxGrp[1])
 
         lastFrost = datetime.datetime.strptime(HausruckWatherProvider._getTextFromTr(tableRows, 22, 3), '(%H:%M\xa0\xa0%d.%m.%Y)')
         lastFrostDuration = HausruckWatherProvider._getTextFromTr(tableRows, 22, 2)[7:]

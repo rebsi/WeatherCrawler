@@ -131,16 +131,16 @@ class MsSqlWeatherDataMixin:
 #	,WindchillMax DECIMAL(5, 2) NULL
 #	,WindchillMaxTime DATETIME2 NULL
 #	,WindSpeed DECIMAL(5, 2) NULL
-#	,WindDirection NVARCHAR(7) NULL
-#	,WindDominatingDirection NVARCHAR(7) NULL
+#	,WindDirection DECIMAL(4, 1) NULL
+#	,WindDominatingDirection DECIMAL(4, 1) NULL
 #	,WindMaxTime DATETIME2 NULL
 #	,WindMax DECIMAL(5, 2) NULL
-#	,WindMaxDirection NVARCHAR(7) NULL
+#	,WindMaxDirection DECIMAL(4, 1) NULL
 #	,Gust DECIMAL(5, 2) NULL
-#	,GustDirection NVARCHAR(7) NULL
+#	,GustDirection DECIMAL(4, 1) NULL
 #	,GustMaxTime DATETIME2 NULL
 #	,GustMax DECIMAL(5, 2) NULL
-#	,GustMaxDirection NVARCHAR(7) NULL
+#	,GustMaxDirection DECIMAL(4, 1) NULL
 #	,LastFrost DATETIME2 NULL
 #	,LastFrostDuration NVARCHAR(100) NULL
 #	,RainLastHour DECIMAL(5, 2) NULL
@@ -152,6 +152,5 @@ class MsSqlWeatherDataMixin:
 #	,Cloudiness DECIMAL(5, 2) NULL
 #	,MoonPhase DECIMAL(5, 2) NULL
 #	,MoonNextFull DATETIME2 NULL
-#   ,PRIMARY KEY (Id)
+#	,CONSTRAINT [PK_WeatherData] PRIMARY KEY CLUSTERED ([Id] ASC)
 #	)
-
