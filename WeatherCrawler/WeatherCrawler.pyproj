@@ -22,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="LoxoneNotifyer.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MsSqlWeatherDataMixin.py">
       <SubType>Code</SubType>
     </Compile>
