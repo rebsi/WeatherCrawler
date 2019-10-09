@@ -73,6 +73,7 @@ class MsSqlWeatherDataMixin:
                               'Database=eberTest;'
                               'Trusted_Connection=yes;')
 
+        newData = False
         with conn:
             cursor = conn.cursor()
             cursor.execute('SELECT TOP (1) dataTime FROM [dbo].[WeatherData] WITH (UPDLOCK) ORDER BY dataTime DESC')
@@ -83,9 +84,12 @@ class MsSqlWeatherDataMixin:
                 lastDataTime = datetime.datetime.strptime(row[0], '%Y-%m-%d %H:%M:%S.%f0')
 
             if lastDataTime == None or lastDataTime < self.dataTime:
+                newData = True
                 self._insertIntoTable(cursor)
 
             conn.commit()
+
+            return newData
 
 
 #CREATE TABLE [WeatherData] (
