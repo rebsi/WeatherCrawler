@@ -19,10 +19,10 @@ class HausruckWatherProvider(object):
         return tableRows[idx].findChildren(tag)[subIdx].text
 
     def _parseInt(self, str):
-        return int(re.search("(\d+)", str)[1])
+        return int(re.search("(-?\d+)", str)[1])
 
     def _parseFloat(self, str):
-        return float(re.search("(\d+,\d+)", str)[1].replace(',','.'))
+        return float(re.search("(-?\d+,\d+)", str)[1].replace(',','.'))
 
     def _parseTime(self, str):
         timePart = datetime.datetime.strptime(re.search("(\d+:\d+)", str)[1], '%H:%M')
