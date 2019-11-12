@@ -29,12 +29,12 @@ class WeatherData(MsSqlWeatherDataMixin):
         solarRadiation, solarRadiationMax, solarRadiationMaxTime, 
         evapotranspiration, 
         windchill, windchillMin, windchillMinTime, windchillMax, windchillMaxTime, 
-        windSpeed, windDirection, windDominatingDirection, windMaxTime, windMaxGrp, windMax, windMaxDirection, 
-        gust, gustDirection, gustMaxTime, gustMaxGrp, gustMax, gustMaxDirection, 
+        windSpeed, windDirection, windDominatingDirection, windMaxTime, windMax, windMaxDirection, 
+        gust, gustDirection, gustMaxTime, gustMax, gustMaxDirection, 
         lastFrost, lastFrostDuration, 
         rainLastHour, rainDay, rainLast, 
         sunrise, sunZenith, sunset, cloudiness, 
-        moonPhase, moonNextFullGrp, moonNextFull
+        moonPhase, moonNextFull
     ):
         self.stationId = stationId
         self.dataTime = dataTime
@@ -85,14 +85,12 @@ class WeatherData(MsSqlWeatherDataMixin):
         self.windDirection = windDirection
         self.windDominatingDirection = windDominatingDirection
         self.windMaxTime = windMaxTime
-        self.windMaxGrp = windMaxGrp
         self.windMax = windMax
         self.windMaxDirection = windMaxDirection
 
         self.gust = gust
         self.gustDirection = gustDirection
         self.gustMaxTime = gustMaxTime
-        self.gustMaxGrp = gustMaxGrp
         self.gustMax = gustMax
         self.gustMaxDirection = gustMaxDirection
 
@@ -109,7 +107,6 @@ class WeatherData(MsSqlWeatherDataMixin):
         self.cloudiness = cloudiness
 
         self.moonPhase = moonPhase
-        self.moonNextFullGrp = moonNextFullGrp
         self.moonNextFull = moonNextFull
 
     def __str__(self):

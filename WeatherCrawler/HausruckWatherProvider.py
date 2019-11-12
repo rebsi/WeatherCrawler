@@ -193,8 +193,12 @@ class HausruckWatherProvider(object):
         cloudiness = 100 - self._parseInt(HausruckWatherProvider._getTextFromTr(tableRows, 37, 0, 'b'))
 
         moonPhase = self._parseInt(HausruckWatherProvider._getTextFromTr(tableRows, 41, 0, 'b'))
-        moonNextFullGrp = re.search("(.+\.) (.+)( \d{4})", HausruckWatherProvider._getTextFromTr(tableRows, 42, 0, 'b').replace('\xa0', ''))
-        moonNextFull = datetime.datetime.strptime(moonNextFullGrp[1] + self._monthTextToNr(dataDateGrp[2]) + moonNextFullGrp[3], '%H:%M %d.%m %Y')
+        moonNextFullRaw = HausruckWatherProvider._getTextFromTr(tableRows, 42, 0, 'b').replace('\xa0', '')
+        if len(moonNextFullRaw) <= 5:
+            moonNextFull = self._parseTime(moonNextFullRaw)
+        else:
+            moonNextFullGrp = re.search("(.+\.) (.+)( \d{4})", moonNextFullRaw)
+            moonNextFull = datetime.datetime.strptime(moonNextFullGrp[1] + self._monthTextToNr(dataDateGrp[2]) + moonNextFullGrp[3], '%H:%M %d.%m %Y')
 
         return WeatherData('Wolfsegg',
             dataTime, elevation, temp2m, temp2mMin, temp2mMinTime, temp2mMax, temp2mMaxTime, 
@@ -205,10 +209,10 @@ class HausruckWatherProvider(object):
             solarRadiation, solarRadiationMax, solarRadiationMaxTime, 
             evapotranspiration, 
             windchill, windchillMin, windchillMinTime, windchillMax, windchillMaxTime, 
-            windSpeed, windDirection, windDominatingDirection, windMaxTime, windMaxGrp, windMax, windMaxDirection, 
-            gust, gustDirection, gustMaxTime, gustMaxGrp, gustMax, gustMaxDirection, 
+            windSpeed, windDirection, windDominatingDirection, windMaxTime, windMax, windMaxDirection, 
+            gust, gustDirection, gustMaxTime, gustMax, gustMaxDirection, 
             lastFrost, lastFrostDuration, 
             rainLastHour, rainDay, rainLast, 
             sunrise, sunZenith, sunset, cloudiness, 
-            moonPhase, moonNextFullGrp, moonNextFull
+            moonPhase, moonNextFull
             )
